@@ -38,6 +38,7 @@ public class BulletControl : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("총알 오브젝트 충돌");
         CancelInvoke();
         KillBullet();
 

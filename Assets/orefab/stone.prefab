@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5066420261703556885}
   - component: {fileID: 3735787421140905557}
   - component: {fileID: 1725758009037946621}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: object
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5066420261747508134}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: stone
   m_TagString: object
   m_Icon: {fileID: 0}

@@ -43,6 +43,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cube
       objectReference: {fileID: 0}
+    - target: {fileID: 2411210943712405170, guid: 0fc7e35a186088d478394526d06b051d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5517607821410705240, guid: 0fc7e35a186088d478394526d06b051d, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1

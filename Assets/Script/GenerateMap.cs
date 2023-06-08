@@ -199,8 +199,9 @@ public class GenerateMap : MonoBehaviour
                         if (floor_height_chance >= now_chance && object_map[i,j] == 0)
                         {
                             now_chance = Random.Range(1f, 1.5f);
-                            tmp2.transform.localScale = new Vector3(1, now_chance, 1);
-                            tmp2.transform.position = new Vector3(j, (now_chance - 1) * 0.5f, i);
+                            tmp2.transform.GetChild(0).localScale = new Vector3(1, now_chance, 1);
+                            tmp2.transform.localScale = new Vector3(1, 1, 1);
+                            tmp2.transform.position = new Vector3(j, 0, i);                           
                         }
                         else
                         {

@@ -64,6 +64,7 @@
     <Compile Include="Assets\Script\GenerateMap_edited.cs" />
     <Compile Include="Assets\Script\BulletControl.cs" />
     <Compile Include="Assets\Script\PlayerControl.cs" />
+    <Compile Include="Assets\Script\EnermyType.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

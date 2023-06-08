@@ -97,6 +97,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 790c0f2a07525fc4a95bb6116ae649bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stat: {fileID: 0}
+  speed: 0.02
+  hp_bar: {fileID: 0}
+  stamina_bar: {fileID: 0}
+  mental_bar: {fileID: 0}
 --- !u!65 &8103901928305550491
 BoxCollider:
   m_ObjectHideFlags: 0

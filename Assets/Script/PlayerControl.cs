@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour
 {
+    public Canvas canvas;
     [SerializeField]
     PlayerStat stat;
     bool z_delay = false;
@@ -18,9 +19,12 @@ public class PlayerControl : MonoBehaviour
     bool is_running = false;
     bool is_move = false;
     bool is_stamina_zero = false;
+    Rigidbody rigid;
+    bool can_move = true;
     // Start is called before the first frame update
     void Start()
     {
+        rigid = transform.GetComponent<Rigidbody>();
         Debug.Log(stat.Name + ":" + stat.Hp + ":" + stat.Stamina + ":" + stat.Metal);
         hp_bar.maxValue = stat.Hp;
         hp_bar.value = stat.Hp;
@@ -38,41 +42,75 @@ public class PlayerControl : MonoBehaviour
         ChangeStamina();
     }
 
+    private void OnDisable()
+    {
+        stat.Hp = hp_bar.maxValue;
+        stat.Stamina = stamina_bar.maxValue;
+        stat.Metal = mental_bar.maxValue;
+        canvas.gameObject.SetActive(false);
+    }
+
+    private void YCheck()
+    {
+        if(transform.position.y < 1)
+        {
+            rigid.useGravity = false;
+          //  transform.position = ;
+        }
+    }
+
     private void Movement()
     {
+        if(stat.Metal <= 0)
+        {
+            can_move = false;
+        }
         is_move = false;
-        if (Input.GetKey(KeyCode.W))
+        if (can_move)
         {
-            transform.Translate(new Vector3(0, 0, 1) * Time.deltaTime * speed);
-            is_move = true;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.Translate(new Vector3(0, 0, -1) * Time.deltaTime * speed);
-            is_move = true;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Translate(new Vector3(-1, 0, 0) * Time.deltaTime * speed);
-            is_move = true;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Translate(new Vector3(1, 0, 0) * Time.deltaTime * speed);;
-            is_move = true;
-        }
-        
-        if (!is_stamina_zero)
-        {
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.W))
             {
-                speed *= 2f;
-                is_running = true;
+                transform.Translate(new Vector3(0, 0, 1) * Time.deltaTime * speed);
+                is_move = true;
             }
-            if (Input.GetKeyUp(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.S))
             {
-                speed = speed_org;
-                is_running = false;
+                transform.Translate(new Vector3(0, 0, -1) * Time.deltaTime * speed);
+                is_move = true;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                transform.Translate(new Vector3(-1, 0, 0) * Time.deltaTime * speed);
+                is_move = true;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                transform.Translate(new Vector3(1, 0, 0) * Time.deltaTime * speed); ;
+                is_move = true;
+            }
+
+            if (!is_stamina_zero)
+            {
+                if (Input.GetKeyDown(KeyCode.LeftShift))
+                {
+                    speed *= 2f;
+                    is_running = true;
+                }
+                if (Input.GetKeyUp(KeyCode.LeftShift))
+                {
+                    speed = speed_org;
+                    is_running = false;
+                }
+            }
+        }
+        else
+        {
+            stat.Metal += Time.deltaTime * 10;
+            if(stat.Metal >= mental_bar.maxValue)
+            {
+                stat.Metal = mental_bar.maxValue;
+                UpdateBar();
+                can_move = true;
             }
         }
     }
@@ -113,7 +151,7 @@ public class PlayerControl : MonoBehaviour
                 speed = speed / 2;
             }
         }
-    }
+    }    
 
     void ClearZDelay()
     {
@@ -129,14 +167,27 @@ public class PlayerControl : MonoBehaviour
     {
         if(collision.gameObject.layer == 6)
         {
-            stat.Hp -= 10;
-            hp_bar.value = stat.Hp;
-            if(stat.Hp <= 0)
+            if (Random.Range(0f, 1f) <= stat.DamagedChance)
             {
-                transform.GetChild(0).parent = null;
-                gameObject.SetActive(false);
-
-            }            
+                stat.Hp -= 10;
+                if (stat.Hp <= 0)
+                {
+                    transform.GetChild(0).parent = null;
+                    gameObject.SetActive(false);
+                }
+            }
+            if (stat.Metal > 0 && can_move)
+            {
+                stat.Metal -= 5;
+            }
+            UpdateBar();
         }
+    }
+
+    private void UpdateBar()
+    {
+        hp_bar.value = stat.Hp;
+        stamina_bar.value = stat.Stamina;
+        mental_bar.value = stat.Metal;
     }
 }

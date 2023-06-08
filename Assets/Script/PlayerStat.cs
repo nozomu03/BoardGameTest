@@ -12,9 +12,11 @@ public class PlayerStat : ScriptableObject
     float stamina;
     [SerializeField]
     float metal;
-
+    [SerializeField]
+    float damaged_chance;
     public string Name { get => name; set => name = value; }
     public float Hp { get => hp; set => hp = value; }
     public float Stamina { get => stamina; set => stamina = value; }
     public float Metal { get => metal; set => metal = value; }
+    public float DamagedChance { get => damaged_chance; set => damaged_chance = value; }
 }

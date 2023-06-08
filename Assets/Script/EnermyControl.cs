@@ -5,6 +5,14 @@ using UnityEngine;
 
 public class EnermyControl : MonoBehaviour
 {
+    ///////////////////////////////////
+    public string type;
+    public float hp;
+    public float atk;    
+    public float damaged_chance;    
+    public float mental;
+    ////////////////////////////////////
+    
     GameObject target_obj;
     bool inside = false;
     [SerializeField]
@@ -13,12 +21,27 @@ public class EnermyControl : MonoBehaviour
     bool shot_wait = false;
     Vector3 now_distance;
     public int remain_bullet = 20;
+    public EnermyType this_type;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
+        initialize();    
+       // Debug.Log(transform.forward);
+    }
+
+    void initialize()
+    {
+        type = this_type.Type;
+        hp = this_type.Hp;
+        atk = this_type.Atk;
+        damaged_chance = this_type.DamagedChance;
+        mental = this_type.Mental;
         magazine = transform.GetChild(0).childCount;
         remain_bullet = magazine;
-       // Debug.Log(transform.forward);
+        transform.GetChild(1).GetComponent<SphereCollider>().radius = this_type.CheckDistance;
     }
 
     // Update is called once per frame
@@ -32,6 +55,7 @@ public class EnermyControl : MonoBehaviour
         }
         //Debug.Log((transform.position - enermy.transform.position));   
     }
+
     bool CherckDistance()
     {
         now_distance = (transform.position - target_obj.transform.position);

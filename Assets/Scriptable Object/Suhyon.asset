@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "\uACFD\uC218\uD604"
   hp: 100
-  stamina: 2.2585633
-  metal: 10
+  stamina: 5
+  metal: 100
+  damaged_chance: 0.3
